@@ -66,6 +66,30 @@ function ReservationForm({ reservation, handleSubmit, handleCancel, handleChangg
               required={true}
             />
           </div>
+          <div className="form-group">
+            <label htmlFor="people">Party Size</label>
+            <input
+              type="number"
+              className="form-control"
+              name="people"
+              id="people"
+              value={reservation.people}
+              onChange={handleChange}
+              required={true}
+            />
+          </div>
+          <div>
+            <button type="submit" className="btn btn-primary mr-2">
+              Submit
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </>
     );
