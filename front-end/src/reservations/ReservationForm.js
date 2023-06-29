@@ -52,6 +52,20 @@ function ReservationForm({ reservation, handleSubmit, handleCancel, handleChangg
               required={true}
             />
           </div>
+          <div className="form-group">
+            <label htmlFor="reservation_time">Reservation Time</label>
+            <input
+              type="time"
+              className="form-control"
+              name="reservation_time"
+              id="reservation_time"
+              value={reservation.reservation_time}
+              placeholder="HH:MM"
+              pattern="[0-9]{2}:[0-9]{2}"
+              onChange={handleChange}
+              required={true}
+            />
+          </div>
         </form>
       </>
     );
