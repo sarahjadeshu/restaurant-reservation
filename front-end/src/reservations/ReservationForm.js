@@ -94,3 +94,5 @@ function ReservationForm({ reservation, handleSubmit, handleCancel, handleChangg
       </>
     );
 }
+
+export default ReservationForm;
