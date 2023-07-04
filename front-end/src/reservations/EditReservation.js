@@ -45,4 +45,16 @@ function EditReservation() {
 
         return () => abortController.abort();
     }
+
+    return (
+        <>
+            <div>
+                <h1>Edit Reservation</h1>
+                <ErrorAlert error={error} />
+                <ReservationForm reservation={reservation} handleChange={handleChange} handleCancel={handleCancel} handleSubmit={handleSubmit} />
+            </div>
+        </>
+    )
 }
+
+export default EditReservation;
