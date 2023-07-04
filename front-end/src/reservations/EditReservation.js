@@ -28,4 +28,21 @@ function EditReservation() {
             [target.name]: target.value,
         })
     }
+
+    const handleCancel = () => {
+        history.goBack();
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const abortController = new AbortController();
+
+        updateReservation(reservation, abortController.signal)
+            .then(() => {
+                history.push(`/dashboard?date=${reservation.reservation_date}`)
+            })
+            .catch(setError);
+
+        return () => abortController.abort();
+    }
 }
