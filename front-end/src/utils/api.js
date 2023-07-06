@@ -80,3 +80,17 @@ export async function createReservation(reservation, signal) {
 
   return await fetchJson(url, options);
 }
+
+export async function getReservation(reservation_id, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}`;
+
+  const options = {
+    method: "GET",
+    headers,
+    signal,
+  }
+
+  return await fetchJson(url, options)
+  .then(formatReservationDate)
+  .then(formatReservationTime);
+}
