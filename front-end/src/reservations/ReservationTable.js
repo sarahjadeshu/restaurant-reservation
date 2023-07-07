@@ -28,4 +28,27 @@ function ReservationTable({ reservations, handleCancel }) {
             </td>
         </tr>
     ))
+
+    return (
+        <>
+            <table className="table">
+                <thead className="thead-dark">
+                    <tr>
+                        <th scope="col">Reservation ID</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Party Size</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+        </>
+    )
 }
+
+export default ReservationTable;
