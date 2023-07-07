@@ -14,10 +14,13 @@ function ReservationTable({ reservations, handleCancel }) {
             </td>
             <td className="btn-group" role="group">
                 {reservation.status === "booked" && (
-                    <a href={`/reservations/${reservation.reservation_id}/edit`}
+                    <a href={`/reservations/${reservation.reservation_id}/seat`}
                     type="button"
-                    className="btn btn-secondary">Edit</a>
+                    className="btn btn-primary">Seat</a>
                 )}
+                <a href={`/reservations/${reservation.reservation_id}/edit`}
+                type="button"
+                className="btn btn-secondary">Edit</a>
             </td>
         </tr>
     ))
