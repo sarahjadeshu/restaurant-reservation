@@ -21,6 +21,10 @@ function ReservationTable({ reservations, handleCancel }) {
                 <a href={`/reservations/${reservation.reservation_id}/edit`}
                 type="button"
                 className="btn btn-secondary">Edit</a>
+                <button data-reservation-id-cancel={reservation.reservation_id}
+                type="button"
+                onClick={() => (handleCancel(reservation))}
+                className="btn btn-danger">Cancel</button>
             </td>
         </tr>
     ))
