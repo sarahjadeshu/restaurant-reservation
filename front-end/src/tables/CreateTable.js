@@ -15,4 +15,11 @@ function CreateTable() {
     const handleCancel = () => {
         history.goBack();
     }
+
+    const handleChange = ({ target }) => {
+        setTable({
+            ...table,
+            [target.name]: target.value,
+        })
+    }
 }
