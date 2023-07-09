@@ -22,4 +22,13 @@ function CreateTable() {
             [target.name]: target.value,
         })
     }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        createTable(table)
+            .then(() => {
+                history.push("/dashboard")
+            })
+            .catch(setError);
+    }
 }
