@@ -10,4 +10,11 @@ function Search () {
     const handleChange = ({ target }) => {
         setMobileNumber(target.value);
     }
+
+    const handleCancel = async (reservation) => {
+        if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
+            await updateStatus("cancelled", reservation.reservation_id);
+            window.location.reload();
+        }
+    }
 }
