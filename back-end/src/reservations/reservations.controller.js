@@ -1,3 +1,5 @@
+const asyncErrorBoundary = require("../errors/")
+
 /**
  * List handler for reservation resources
  */
