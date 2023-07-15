@@ -132,3 +132,53 @@ export async function createTable(table, signal) {
 
   return await fetchJson(url, options);
 }
+
+export async function listTable(signal) {
+  const url = `${API_BASE_URL}/tables`;
+
+  const options = {
+    method: "GET",
+    headers,
+    signal,
+  }
+
+  return await fetchJson(url, options);
+}
+
+export async function seatReservation(reservation_id, table_id, signal) {
+  const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: { reservation_id: reservation_id } }),
+    signal,
+  }
+
+  return await fetchJson(url, options);
+}
+
+export async function clearTable(table_id, signal) {
+  const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+
+  const options = {
+    method: "DELETE",
+    headers,
+    body: JSON.stringify({ data: {} }),
+    signal,
+  }
+
+  return await fetchJson(url, options);
+}
+
+export async function search(mobile_number, signal) {
+  const url = `${API_BASE_URL}/reservations?mobile_number=${mobile_number}`;
+
+  const options = {
+    method: "GET",
+    headers,
+    signal,
+  }
+
+  return await fetchJson(url, options);
+}
