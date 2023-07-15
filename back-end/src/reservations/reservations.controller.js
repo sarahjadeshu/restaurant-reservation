@@ -21,6 +21,19 @@ async function list(req, res) {
   res.json({ data });
 }
 
+async function read(req, res) {
+  res.json({ data: res.locals.reservation });
+}
+
+async function create(req, res) {
+  const newReservation = await service.create({
+    ...req.body.data,
+    status: "booked",
+  })
+
+  res.status(201).json({ data: newReservation });
+}
+
 module.exports = {
   list,
 };
