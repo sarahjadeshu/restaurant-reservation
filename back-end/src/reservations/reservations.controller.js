@@ -144,8 +144,106 @@ const hasValidTime = (req, res, next) => {
   }
 }
 
+const hasValidPeople = (req, res, next) => {
+  const { people } = req.body.data;
+
+  if (people <= 0 || typeof people !== "number") {
+    next({
+      status: 400,
+      message: `People must include a number greater than 0.`
+    })
+  } else {
+    next();
+  }
+}
+
+const hasValidStatus = (req, res, next) => {
+  const { status } = req.body.data;
+  const statusProperties = ["booked", "seated", "cancelled", "finished"];
+
+  if (!statusProperties.includes(status)) {
+    return next({
+      status: 400,
+      message: `${status} is not a valid status.`
+    })
+  } else {
+    next();
+  }
+}
+
+const finishedUpdate = (req, res, next) => {
+  const { status } = res.locals.reservation;
+
+  if (status === "finished") {
+    return next({
+      status: 400,
+      message: `${status} cannot be updated.`
+    })
+  } else {
+    next();
+  }
+}
+
+const isBooked = (req, res, next) => {
+  const { status } = req.body.data;
+
+  if (status !== "booked") {
+    return next({
+      status: 400,
+      message: `${status} is not a valid status. Reservation must begin as 'booked'.`
+    })
+  } else {
+    next();
+  }
+}
+
+const hasData = (req, res, next) => {
+  const data = req.body.data;
+
+  if (!data) {
+    next({
+      status: 400,
+      message: `Data is required.`
+    })
+  } else {
+    next();
+  }
+}
+
 
 
 module.exports = {
-  list,
+  list: asyncErrorBoundary(list),
+  read: [
+    asyncErrorBoundary(reservationExists), 
+    read,
+  ],
+  update: [
+    asyncErrorBoundary(reservationExists),
+    hasRequiredFields,
+    hasValidDate,
+    hasValidTime,
+    hasValidPeople,
+    asyncErrorBoundary(update),
+  ],
+  updateStatus: [
+    asyncErrorBoundary(reservationExists),
+    finishedUpdate,
+    hasValidStatus,
+    asyncErrorBoundary(update),
+  ],
+  create: [
+    hasData,
+    hasRequiredFields,
+    isBooked,
+    hasValidProperties,
+    hasValidDate,
+    hasValidTime,
+    hasValidPeople,
+    asyncErrorBoundary(create),
+  ],
+  delete: [
+    asyncErrorBoundary(reservationExists),
+    asyncErrorBoundary(destroy),
+  ],
 };
