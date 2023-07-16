@@ -24,6 +24,35 @@ const listByMobileNumber = (mobile_number) => {
     .orderBy("reservation_date")
 }
 
+const create = (newReservation) => {
+    return knex("reservations")
+    .insert(newReservation)
+    .returning("*")
+    .then((reservation) => reservation[0])
+}
+
+const read = (reservation_id) => {
+    return knex("reservations")
+    .select("*")
+    .where({ reservation_id })
+    .first()
+}
+
+const update = (updatedReservation) => {
+    return knex("reservations")
+    .select("*")
+    .where({ reservation_id: updatedReservation.reservation_id })
+    .update(updatedReservation)
+    .returning("*")
+    .then((newReservations) => newReservations[0])
+}
+
+const destroy = (reservation_id) => {
+    return knex("reservations")
+    .where({ reservation_id })
+    .del()
+}
+
 module.exports = {
     list,
     listByDate,
@@ -31,5 +60,5 @@ module.exports = {
     create,
     read,
     update,
-    search,
+    destroy,
 }
