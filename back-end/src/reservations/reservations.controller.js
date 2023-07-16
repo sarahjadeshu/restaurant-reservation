@@ -34,6 +34,28 @@ async function create(req, res) {
   res.status(201).json({ data: newReservation });
 }
 
+async function update(req, res) {
+  const { reservation_id } = res.locals.reservation;
+
+  const updatedReservation = {
+    ...req.body.data,
+    reservation_id,
+  };
+
+  const data = await service.update(updatedReservation);
+  res.json({ data });
+}
+
+async function destroy(req, res) {
+  await service.destroy(res.locals.reservation.reservation_id);
+  res.sendStatus(201);
+}
+
+
+// Validation Functions
+
+
+
 module.exports = {
   list,
 };
