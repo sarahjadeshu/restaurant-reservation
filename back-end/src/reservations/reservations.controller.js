@@ -22,16 +22,12 @@ async function list(req, res) {
 }
 
 async function read(req, res) {
-  res.json({ data: res.locals.reservation });
+  res.json({ data: await service.read(res.locals.reservation.reservation_id) });
 }
 
 async function create(req, res) {
-  const newReservation = await service.create({
-    ...req.body.data,
-    status: "booked",
-  })
-
-  res.status(201).json({ data: newReservation });
+  const data = await service.create(req.body.data);
+  res.status(201).json({ data })
 }
 
 async function update(req, res) {
@@ -106,7 +102,7 @@ const hasValidDate = (req, res, next) => {
   if (!formattedDate.test(reservation_date)) {
     next({
       status: 400,
-      message: `Reservation date must be submitted in 'YYYY-MM-DD' format.`
+      message: `reservation_date must be submitted in 'YYYY-MM-DD' format.`
     })
   } else if (reservationDate.getUTCDay() === 2) {
     next({
@@ -118,7 +114,7 @@ const hasValidDate = (req, res, next) => {
   } else if (reservationDate < today) {
     next({
       status: 400,
-      message: `Reservation date must be made at least a day later.`
+      message: `Reservation date must be made at least a day in the future.`
     })
   } else {
     next();
@@ -132,7 +128,7 @@ const hasValidTime = (req, res, next) => {
   if (!formattedTime.test(reservation_time)) {
     next({
       status: 400,
-      message: `Reservation time must be in 'HH:MM:SS' or 'HH:MM' format.`
+      message: `reservation_time must be in 'HH:MM:SS' or 'HH:MM' format.`
     })
   } else if (reservation_time < "10:30" || reservation_time > "21:30") {
     next({
@@ -150,7 +146,7 @@ const hasValidPeople = (req, res, next) => {
   if (people <= 0 || typeof people !== "number") {
     next({
       status: 400,
-      message: `People must include a number greater than 0.`
+      message: `people must include a number greater than 0.`
     })
   } else {
     next();
@@ -186,12 +182,14 @@ const finishedUpdate = (req, res, next) => {
 
 const isBooked = (req, res, next) => {
   const { status } = req.body.data;
-
-  if (status !== "booked") {
-    return next({
-      status: 400,
-      message: `${status} is not a valid status. Reservation must begin as 'booked'.`
-    })
+  
+  if (status) {
+    if (status !== "booked") {
+      return next({
+        status: 400,
+        message: `${status} is not a valid status. Reservation must begin as 'booked'.`,
+      });
+    }
   } else {
     next();
   }

@@ -15,7 +15,7 @@ const listByDate = (reservation_date) => {
     .orderBy("reservation_time")
 }
 
-const listByMobileNumber = (mobile_number) => {
+const search = (mobile_number) => {
     return knex("reservations")
     .whereRaw(
       "translate(mobile_number, '() -', '') like ?",
@@ -56,7 +56,7 @@ const destroy = (reservation_id) => {
 module.exports = {
     list,
     listByDate,
-    listByMobileNumber,
+    search,
     create,
     read,
     update,

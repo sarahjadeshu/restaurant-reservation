@@ -1,5 +1,5 @@
 function hasProperties(...properties) {
-    return function (req, res, next) {
+    return function (res, req, next) {
         const { data = {} } = res.body;
 
         try {

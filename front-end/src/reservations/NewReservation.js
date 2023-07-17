@@ -4,9 +4,6 @@ import { createReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
 
-
-// Displays the form that is used to create a new reservation
-
 function NewReservation() {
 
     const initialFormState = {

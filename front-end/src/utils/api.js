@@ -91,8 +91,6 @@ export async function getReservation(reservation_id, signal) {
   }
 
   return await fetchJson(url, options)
-  .then(formatReservationDate)
-  .then(formatReservationTime);
 }
 
 export async function updateReservation(reservation, signal) {
@@ -107,7 +105,7 @@ export async function updateReservation(reservation, signal) {
   return await fetchJson(url, options);
 }
 
-export async function updateStatus(status, reservation_id, signal) {
+export async function updateStatus(reservation_id, status, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation_id}/status`
 
   const options = {
@@ -151,7 +149,7 @@ export async function seatReservation(reservation_id, table_id, signal) {
   const options = {
     method: "PUT",
     headers,
-    body: JSON.stringify({ data: { reservation_id: reservation_id } }),
+    body: JSON.stringify({ data: { reservation_id } }),
     signal,
   }
 
