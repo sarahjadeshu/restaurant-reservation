@@ -1,32 +1,60 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { search } from "../utils/api";
+import ReservationTable from "./ReservationTable";
 import ErrorAlert from "../layout/ErrorAlert";
-import ReservationTable from "../reservations/ReservationTable";
-import { listReservations, updateStatus } from "../utils/api";
 
-function Search () {
+function Search() {
+    const [searchNumber, setSearchNumber] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
     const [error, setError] = useState(null);
-    const [mobile_number, setMobileNumber ] = useState("");
-    const [reservationMobile, setReservationMobile] = useState([]);
 
-    const handleChange = ({ target }) => {
-        setMobileNumber(target.value);
+    function handleChange({ target: { value } }) {
+        setSearchNumber(value);
     }
 
-    const handleCancel = async (reservation) => {
-        if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
-            await updateStatus("cancelled", reservation.reservation_id);
-            window.location.reload();
+    async function handleSubmit(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const abortController = newAbortController();
+
+        setError(null);
+        const results = await search(searchNumber, abortController.signal);
+
+        if (!results.length) {
+            setError({
+                message: "No reservations found."
+            })
+
+            setSearchResults(results);
+            return () => abortController.abort();
         }
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const abortController = new AbortController();
-
-        listReservations({ mobile_number: mobile_number }, abortController.signal)
-        .then((reservations) => setReservationMobile(reservations))
-        .catch(setError)
-
-        return () => abortController.abort();
-    }
+    return (
+        <div>
+            <h1>Search</h1>
+            <div className="row">
+                <form onSubmit={handleSubmit} className="col-4">
+                    <label htmlFor="mobile_number">Mobile Number</label>
+                    <input
+                        name="mobile_number"
+                        type="text"
+                        id="mobile_number"
+                        value={searchNumber}
+                        placeholder="Enter mobile number"
+                        className="form-control"
+                        onChange={handleChange}
+                        required
+                    />
+                    <button type="submit" className="btn btn-primary">
+                        Submit
+                    </button>
+                </form>
+            </div>
+            <ErrorAlert error={error} />
+            <ReservationTable reservations={searchResults} />
+        </div>
+    )
 }
+
+export default Search;
