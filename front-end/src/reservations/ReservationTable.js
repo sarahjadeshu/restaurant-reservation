@@ -1,54 +1,86 @@
 import React from "react";
+import Cancel from "../reservations/Cancel";
+import { Link } from "react-router-dom";
+import { formatAsTime } from "../utils/date-time";
 
-function ReservationTable({ reservations, handleCancel }) {
-    const rows = reservations.map((reservation) => (
-        <tr key={reservations.reservation_id}>
-            <th scope="row">{reservation.reservation_id}</th>
-            <td>{reservation.first_name}</td>
-            <td>{reservation.last_name}</td>
-            <td>{reservation.people}</td>
-            <td>{reservation.reservation_date}</td>
-            <td>{reservation.reservation_time}</td>
-            <td data-reservation-id-status={reservation.reservation_id}>
-                {reservation.status}
-            </td>
-            <td className="btn-group" role="group">
-                {reservation.status === "booked" && (
-                    <a href={`/reservations/${reservation.reservation_id}/seat`}
-                    type="button"
-                    className="btn btn-primary">Seat</a>
-                )}
-                <a href={`/reservations/${reservation.reservation_id}/edit`}
-                type="button"
-                className="btn btn-secondary">Edit</a>
-                <button data-reservation-id-cancel={reservation.reservation_id}
-                type="button"
-                onClick={() => (handleCancel(reservation))}
-                className="btn btn-danger">Cancel</button>
-            </td>
-        </tr>
-    ))
+function ReservationTable({ reservations, isToday }) {
 
-    return (
-        <>
-            <table className="table">
-                <thead className="thead-dark">
-                    <tr>
-                        <th scope="col">Reservation ID</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Party Size</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows}
-                </tbody>
-            </table>
-        </>
-    )
+    function formatMobileNumber(mobileNumber) {
+        mobileNumber = mobileNumber.replace(/[^0-9.]/g, "");
+        const formattedNumber = mobileNumber.slice(0, 3) + "-" + mobileNumber.slice(3, 6) + "-" + mobileNumber.slice(6);
+
+        return formattedNumber;
+    }
+
+    let tableData;
+
+    if (reservations) {
+        tableData = reservations.map((result) => {
+            let badge;
+
+            switch (result.status) {
+                case "seated":
+                    badge = "badge badge-primary";
+                    break;
+                case "finished":
+                    badge = "badge badge-secondary";
+                    break;
+                case "cancelled":
+                    badge = "badge badge-danger";
+                    break;
+                default:
+                    badge = "badge badge-success";
+
+            }
+
+            return (
+                <tr key={result.reservation_id}>
+                    <td>{result.reservation_id}</td>
+                    <td>{result.first_name}</td>
+                    <td>{result.last_name}</td>
+                    <td>{formatMobileNumber(result.mobile_number)}</td>
+                    <td>{formatAsTime(result.reservation_time)}</td>
+                    <td data-reservation-id-status={result.reservation_id}>
+                        <h6 className={badge}>{result.status}</h6>
+                    </td>
+                    <td>{result.people}</td>
+                    <td>{result.status === "booked" ? (
+                        <a className="btn btn-primary" href={`/reservations/${result.reservation_id}/seat`}>
+                            Seat
+                        </a>) : null}
+                    </td>
+                    <td data-reservation-id-status={result.reservation_id}>
+                        {result.status === "booked" ? (
+                            <Link to={{pathname: `/reservations/${result.reservation_id}/edit`,}}>
+                                <button className="btn btn-secondary">Edit</button>
+                            </Link>
+                        ) : null}
+                    </td>
+                    <td><Cancel reservation_id={result.reservation_id} /></td>
+                </tr>
+            )
+        })
+    }
+
+    return reservations.length > 0 ? (
+        <table className="table">
+            <thead>
+                <tr>
+                    <th scope="col">Reservation ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Reservation Time</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Party Size</th>
+                    <th scope="col">Seat</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Cancel</th>
+                </tr>
+            </thead>
+            <tbody>{tableData}</tbody>
+        </table>
+    ) : null;
 }
 
 export default ReservationTable;
