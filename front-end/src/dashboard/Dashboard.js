@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from "react-router";
+import { formatAsDate, previous, next, today } from "../utils/api";
+import ReservationTable from "../reservations/ReservationTable";
+import TablesTable from "../tables/TablesTable";
+import useQuery from "../utils/useQuery";
 
 /**
  * Defines the dashboard page.
@@ -12,6 +16,19 @@ import { useHistory } from "react-router";
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
+
+  const query = useQuery();
+  const getDate = query.get("date");
+  const history = useHistory();
+  const displayDate = formatAsDate(date);
+  const previousDate = previous(date);
+  const nextDate = next(date);
+  let isToday = true;
+
+  if (getDate && getDate !== today()) {
+    date = getDate;
+    isToday = false;
+  }
 
   useEffect(loadDashboard, [date]);
 
@@ -24,14 +41,37 @@ function Dashboard({ date }) {
     return () => abortController.abort();
   }
 
+  function adjustDate(updatedDate) {
+    history.push(`/dashboard?date=${updatedDate}`);
+  }
+
+  let result = reservations.filter((reservation) => {
+    return (
+      reservation.status !== "finished" && reservation.status !== "cancelled"
+    )
+  })
+
   return (
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
+        <h4 className="mb-0">Reservations for {displayDate}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
+      <div className="btn-group" role="group" aria-label="Choose a date">
+        <button className="btn btn-primary" onClick={() => adjustDate(previousDate)}>
+          Back
+        </button>
+        <button className="btn btn-primary" onClick={() => history.push("/dashboard")} disabled={date === today()}>
+          Today
+        </button>
+        <button className="btn btn-primary" onClick={() => adjustDate(nextDate)}>
+          Next
+        </button>
+      </div>
+      <ReservationTable reservations={results} isToday={isToday} />
+      {!reservations.length && <h3>No reservations available on this date.</h3>}
+      <TablesTable />
     </main>
   );
 }
