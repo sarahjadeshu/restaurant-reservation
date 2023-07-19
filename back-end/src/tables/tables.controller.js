@@ -29,6 +29,31 @@ async function destroy(req, res, next) {
 
 // Validation Functions
 
+const VALID_PROPERTIES = [
+    "table_name",
+    "capacity",
+    "reservation_id",
+]
+
+const hasValidProperties = (req, res, next) => {
+    const { data = {} } = req.body;
+
+    const invalid = Object.keys(data).filter((field) => !VALID_PROPERTIES.includes(field))
+
+    if (invalid.length) {
+        return next({
+            status: 400,
+            message: `Invalid field(s): ${invalid.join(", ")}`
+        })
+    } else {
+        next();
+    }
+}
+
+const hasRequiredFieldsForCreate = hasProperties(...VALID_PROPERTIES.slice(0, 2))
+
+const hasRequiredFieldsForUpdate = hasProperties(...VALID_PROPERTIES.slice(2))
+
 const reservationExists = async (req, res, next) => {
     const { reservation_id } = req.body.data;
     const reservation = await reservationsService.read(reservation_id);
@@ -96,4 +121,85 @@ const hasValidCapacity = (req, res, next) => {
     } else {
         next();
     }
+}
+
+const hasValidStatus = (req, res, next) => {
+    const { status } = res.locals.reservation;
+
+    if (status !== "booked") {
+        return next({
+            status: 400,
+            message: `Reservations cannot be seated with this status: ${status}.`
+        })
+    } else {
+        next();
+    }
+}
+
+const isAtCapacity = (req, res, next) => {
+    const { capacity } = res.locals.table;
+    const { people } = res.locals.reservation;
+
+    if (people > capacity) {
+        return next({
+            status: 400,
+            message: "people must be less than capacity."
+        })
+    } else {
+        next();
+    }
+}
+
+const isOccupied = (req, res, next) => {
+    const { reservation_id } = res.locals.table;
+
+    if (reservation_id) {
+        return next({
+            status: 400,
+            message: "Sorry, this table is already occupied."
+        })
+    } else {
+        next();
+    }
+}
+
+const isNotOccupied = (req, res, next) => {
+    const { reservation_id } = res.locals.table;
+
+    if (!reservation_id) {
+        return next({
+            status: 400,
+            message: "Table must be occupied in order to be cleared."
+        })
+    } else {
+        next();
+    }
+}
+
+module.exports = {
+    list: asyncErrorBoundary(list),
+    create: [
+        hasPayload,
+        hasRequiredFieldsForCreate,
+        hasValidProperties,
+        hasValidTableName,
+        hasValidCapacity,
+        asyncErrorBoundary(create),
+    ],
+    update: [
+        hasPayload,
+        asyncErrorBoundary(tableExists),
+        hasRequiredFieldsForUpdate,
+        asyncErrorBoundary(reservationExists),
+        hasValidProperties,
+        hasValidStatus,
+        isAtCapacity,
+        isOccupied,
+        asyncErrorBoundary(update),
+    ],
+    delete: [
+        asyncErrorBoundary(tableExists),
+        isNotOccupied,
+        asyncErrorBoundary(destroy),
+    ]
 }
