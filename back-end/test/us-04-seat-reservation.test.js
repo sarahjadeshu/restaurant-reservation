@@ -15,6 +15,13 @@ describe("US-04 - Seat reservation", () => {
     return knex.seed.run();
   });
 
+  afterEach(() => {
+    return knex.migrate
+      .forceFreeMigrationsLock()
+      .then(() => knex.migrate.rollback(null, true))
+      .then(() => knex.migrate.latest());
+  })
+
   afterAll(async () => {
     return await knex.migrate.rollback(null, true).then(() => knex.destroy());
   });

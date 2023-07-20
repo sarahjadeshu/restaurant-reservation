@@ -15,6 +15,14 @@ describe("US-06 - Reservation status", () => {
     return knex.seed.run();
   });
 
+  afterEach(() => {
+    return knex.migrate
+      .forceFreeMigrationsLock()
+      .then(() => knex.migrate.rollback(null, true))
+      .then(() => knex.migrate.latest());
+  });
+
+
   afterAll(async () => {
     return await knex.migrate.rollback(null, true).then(() => knex.destroy());
   });
@@ -286,6 +294,7 @@ describe("US-06 - Reservation status", () => {
 });
 
 function asDateString(date) {
+  date = new Date();
   return `${date.getFullYear().toString(10)}-${(date.getMonth() + 1)
     .toString(10)
     .padStart(2, "0")}-${date.getDate().toString(10).padStart(2, "0")}`;

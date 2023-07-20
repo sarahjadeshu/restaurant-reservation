@@ -75,7 +75,7 @@ const reservationExists = async (req, res, next) => {
   }
 }
 
-const hasValidProperties = (req, res, next) => {
+const hasValidProperties = async (req, res, next) => {
   const { data = {} } = req.body;
 
   const invalid = Object.keys(data).filter((field) => !VALID_PROPERTIES.includes(field));
@@ -92,7 +92,7 @@ const hasValidProperties = (req, res, next) => {
 
 const hasRequiredFields = hasProperties(...VALID_PROPERTIES.slice(0, 6));
 
-const hasValidDate = (req, res, next) => {
+const hasValidDate = async (req, res, next) => {
   const { reservation_date } = req.body.data;
   const today = new Date();
   const reservationDate = new Date(reservation_date);
@@ -121,7 +121,7 @@ const hasValidDate = (req, res, next) => {
   }
 }
 
-const hasValidTime = (req, res, next) => {
+const hasValidTime = async (req, res, next) => {
   const { reservation_time } = req.body.data;
   const formattedTime = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/;
 
@@ -140,7 +140,7 @@ const hasValidTime = (req, res, next) => {
   }
 }
 
-const hasValidPeople = (req, res, next) => {
+const hasValidPeople = async (req, res, next) => {
   const { people } = req.body.data;
 
   if (people <= 0 || typeof people !== "number") {
@@ -153,7 +153,7 @@ const hasValidPeople = (req, res, next) => {
   }
 }
 
-const hasValidStatus = (req, res, next) => {
+const hasValidStatus = async (req, res, next) => {
   const { status } = req.body.data;
   const statusProperties = ["booked", "seated", "cancelled", "finished"];
 
@@ -167,7 +167,7 @@ const hasValidStatus = (req, res, next) => {
   }
 }
 
-const finishedUpdate = (req, res, next) => {
+const finishedUpdate = async (req, res, next) => {
   const { status } = res.locals.reservation;
 
   if (status === "finished") {
@@ -180,7 +180,7 @@ const finishedUpdate = (req, res, next) => {
   }
 }
 
-const isBooked = (req, res, next) => {
+const isBooked = async (req, res, next) => {
   const { status } = req.body.data;
   
   if (status) {
@@ -195,7 +195,7 @@ const isBooked = (req, res, next) => {
   }
 }
 
-const hasData = (req, res, next) => {
+const hasData = async (req, res, next) => {
   const data = req.body.data;
 
   if (!data) {
@@ -212,36 +212,30 @@ const hasData = (req, res, next) => {
 
 module.exports = {
   list: asyncErrorBoundary(list),
-  read: [
-    asyncErrorBoundary(reservationExists), 
-    read,
-  ],
+  read: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(read)],
   update: [
     asyncErrorBoundary(reservationExists),
-    hasRequiredFields,
-    hasValidDate,
-    hasValidTime,
-    hasValidPeople,
+    asyncErrorBoundary(hasRequiredFields),
+    asyncErrorBoundary(hasValidDate),
+    asyncErrorBoundary(hasValidTime),
+    asyncErrorBoundary(hasValidPeople),
     asyncErrorBoundary(update),
   ],
   updateStatus: [
     asyncErrorBoundary(reservationExists),
-    finishedUpdate,
-    hasValidStatus,
+    asyncErrorBoundary(finishedUpdate),
+    asyncErrorBoundary(hasValidStatus),
     asyncErrorBoundary(update),
   ],
   create: [
-    hasData,
-    hasRequiredFields,
-    isBooked,
-    hasValidProperties,
-    hasValidDate,
-    hasValidTime,
-    hasValidPeople,
+    asyncErrorBoundary(hasData),
+    asyncErrorBoundary(hasRequiredFields),
+    asyncErrorBoundary(isBooked),
+    asyncErrorBoundary(hasValidProperties),
+    asyncErrorBoundary(hasValidDate),
+    asyncErrorBoundary(hasValidTime),
+    asyncErrorBoundary(hasValidPeople),
     asyncErrorBoundary(create),
   ],
-  delete: [
-    asyncErrorBoundary(reservationExists),
-    asyncErrorBoundary(destroy),
-  ],
+  delete: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)],
 };

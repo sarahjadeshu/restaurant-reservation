@@ -126,6 +126,7 @@ const hasValidCapacity = (req, res, next) => {
 const hasValidStatus = (req, res, next) => {
     const { status } = res.locals.reservation;
 
+    console.log(status)
     if (status !== "booked") {
         return next({
             status: 400,
@@ -169,7 +170,7 @@ const isNotOccupied = (req, res, next) => {
     if (!reservation_id) {
         return next({
             status: 400,
-            message: "Table must be occupied in order to be cleared."
+            message: "Table is not occupied. It must be occupied in order to be cleared."
         })
     } else {
         next();
