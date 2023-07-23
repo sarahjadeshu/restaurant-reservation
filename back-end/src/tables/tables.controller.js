@@ -123,7 +123,7 @@ const hasValidCapacity = (req, res, next) => {
     }
 }
 
-const hasValidStatus = (req, res, next) => {
+const hasValidStatus = async (req, res, next) => {
     const { status } = res.locals.reservation;
 
     console.log(status)
@@ -193,7 +193,7 @@ module.exports = {
         hasRequiredFieldsForUpdate,
         asyncErrorBoundary(reservationExists),
         hasValidProperties,
-        hasValidStatus,
+        asyncErrorBoundary(hasValidStatus),
         asyncErrorBoundary(isAtCapacity),
         asyncErrorBoundary(isOccupied),
         asyncErrorBoundary(update),
