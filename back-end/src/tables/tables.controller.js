@@ -137,7 +137,7 @@ const hasValidStatus = (req, res, next) => {
     }
 }
 
-const isAtCapacity = (req, res, next) => {
+const isAtCapacity = async (req, res, next) => {
     const { capacity } = res.locals.table;
     const { people } = res.locals.reservation;
 
@@ -151,7 +151,7 @@ const isAtCapacity = (req, res, next) => {
     }
 }
 
-const isOccupied = (req, res, next) => {
+const isOccupied = async (req, res, next) => {
     const { reservation_id } = res.locals.table;
 
     if (reservation_id) {
@@ -194,8 +194,8 @@ module.exports = {
         asyncErrorBoundary(reservationExists),
         hasValidProperties,
         hasValidStatus,
-        isAtCapacity,
-        isOccupied,
+        asyncErrorBoundary(isAtCapacity),
+        asyncErrorBoundary(isOccupied),
         asyncErrorBoundary(update),
     ],
     delete: [
