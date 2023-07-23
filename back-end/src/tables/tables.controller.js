@@ -110,7 +110,7 @@ const hasValidTableName = (req, res, next) => {
     }
 }
 
-const hasValidCapacity = (req, res, next) => {
+const hasValidCapacity = async (req, res, next) => {
     const { capacity } = req.body.data;
 
     if (!capacity || capacity <= 0 || typeof capacity !== "number") {
@@ -184,7 +184,7 @@ module.exports = {
         hasRequiredFieldsForCreate,
         hasValidProperties,
         hasValidTableName,
-        hasValidCapacity,
+        asyncErrorBoundary(hasValidCapacity),
         asyncErrorBoundary(create),
     ],
     update: [
