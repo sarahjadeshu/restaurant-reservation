@@ -25,10 +25,29 @@ async function read(req, res) {
   res.json({ data: await service.read(res.locals.reservation.reservation_id) });
 }
 
-async function create(req, res) {
-  const data = await service.create(req.body.data);
-  res.status(201).json({ data })
-}
+const create = async (req, res) => {
+  const {
+    first_name,
+    last_name,
+    mobile_number,
+    reservation_date,
+    reservation_time,
+    people,
+  } = req.body.data;
+
+  const reservationData = {
+    first_name,
+    last_name,
+    mobile_number,
+    reservation_date,
+    reservation_time,
+    people,
+    status: "booked",
+  };
+  const newReservation = await service.create(reservationData);
+  
+  res.status(201).json({ data: newReservation });
+};
 
 async function update(req, res) {
   const { reservation_id } = res.locals.reservation;
@@ -46,7 +65,6 @@ async function destroy(req, res) {
   await service.destroy(res.locals.reservation.reservation_id);
   res.sendStatus(201);
 }
-
 
 // Validation Functions
 
@@ -73,12 +91,14 @@ const reservationExists = async (req, res, next) => {
       message: `Sorry, no reservation found with id: ${reservation_id}`,
     });
   }
-}
+};
 
 const hasValidProperties = async (req, res, next) => {
   const { data = {} } = req.body;
 
-  const invalid = Object.keys(data).filter((field) => !VALID_PROPERTIES.includes(field));
+  const invalid = Object.keys(data).filter(
+    (field) => !VALID_PROPERTIES.includes(field)
+  );
 
   if (invalid.length) {
     return next({
@@ -88,7 +108,7 @@ const hasValidProperties = async (req, res, next) => {
   }
 
   next();
-}
+};
 
 const hasRequiredFields = hasProperties(...VALID_PROPERTIES.slice(0, 6));
 
@@ -102,24 +122,24 @@ const hasValidDate = async (req, res, next) => {
   if (!formattedDate.test(reservation_date)) {
     next({
       status: 400,
-      message: `reservation_date must be submitted in 'YYYY-MM-DD' format.`
-    })
+      message: `reservation_date must be submitted in 'YYYY-MM-DD' format.`,
+    });
   } else if (reservationDate.getUTCDay() === 2) {
     next({
       status: 400,
       message: `Sorry, we are closed on Tuesdays. Please choose a different reservation date.`,
-    })
+    });
   } else if (res.locals.reservation) {
     return next();
   } else if (reservationDate < today) {
     next({
       status: 400,
-      message: `Reservation date must be made at least a day in the future.`
-    })
+      message: `Reservation date must be made at least a day in the future.`,
+    });
   } else {
     next();
   }
-}
+};
 
 const hasValidTime = async (req, res, next) => {
   const { reservation_time } = req.body.data;
@@ -128,17 +148,17 @@ const hasValidTime = async (req, res, next) => {
   if (!formattedTime.test(reservation_time)) {
     next({
       status: 400,
-      message: `reservation_time must be in 'HH:MM:SS' or 'HH:MM' format.`
-    })
+      message: `reservation_time must be in 'HH:MM:SS' or 'HH:MM' format.`,
+    });
   } else if (reservation_time < "10:30" || reservation_time > "21:30") {
     next({
       status: 400,
-      message: `Reservations can only be made between 10:30 AM and 9:30 PM.`
-    })
+      message: `Reservations can only be made between 10:30 AM and 9:30 PM.`,
+    });
   } else {
     next();
   }
-}
+};
 
 const hasValidPeople = async (req, res, next) => {
   const { people } = req.body.data;
@@ -146,12 +166,12 @@ const hasValidPeople = async (req, res, next) => {
   if (people <= 0 || typeof people !== "number") {
     next({
       status: 400,
-      message: `people must include a number greater than 0.`
-    })
+      message: `people must include a number greater than 0.`,
+    });
   } else {
     next();
   }
-}
+};
 
 const hasValidStatus = async (req, res, next) => {
   const { status } = req.body.data;
@@ -160,12 +180,12 @@ const hasValidStatus = async (req, res, next) => {
   if (!statusProperties.includes(status)) {
     return next({
       status: 400,
-      message: `${status} is not a valid status.`
-    })
+      message: `${status} is not a valid status.`,
+    });
   } else {
     next();
   }
-}
+};
 
 const finishedUpdate = async (req, res, next) => {
   const { status } = res.locals.reservation;
@@ -173,25 +193,28 @@ const finishedUpdate = async (req, res, next) => {
   if (status === "finished") {
     return next({
       status: 400,
-      message: `${status} cannot be updated.`
-    })
+      message: `${status} cannot be updated.`,
+    });
   } else {
     next();
   }
-}
+};
+
+
 
 const isBooked = async (req, res, next) => {
-  const { status } = req.body.data;
-  
-  if (status) {
-    if (status !== "booked") {
+  if (req.body.data.status) {
+    const { status } = req.body.data;
+    if (status === "booked") {
+      return next();
+    } else {
       return next({
+        message: `Status must be booked and not ${status}`,
         status: 400,
-        message: `${status} is not a valid status. Reservation must begin as 'booked'.`,
       });
     }
   } else {
-    next();
+    return next();
   }
 }
 
@@ -201,14 +224,12 @@ const hasData = async (req, res, next) => {
   if (!data) {
     next({
       status: 400,
-      message: `Data is required.`
-    })
+      message: `Data is required.`,
+    });
   } else {
     next();
   }
-}
-
-
+};
 
 module.exports = {
   list: asyncErrorBoundary(list),

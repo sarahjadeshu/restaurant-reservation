@@ -25,11 +25,10 @@ const search = (mobile_number) => {
 }
 
 const create = (newReservation) => {
-    return knex("reservations")
-    .insert(newReservation)
-    .returning("*")
-    .then((reservation) => reservation[0])
-}
+  return knex("reservations")
+    .insert(newReservation, "*")
+    .then((createdReservations) => createdReservations[0]);
+};
 
 const read = (reservation_id) => {
     return knex("reservations")
