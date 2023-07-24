@@ -97,7 +97,7 @@ const hasPayload = (req, res, next) => {
     }
 }
 
-const hasValidTableName = (req, res, next) => {
+const hasValidTableName = async (req, res, next) => {
     const { table_name } = req.body.data;
 
     if (!table_name || table_name.length <= 1) {
@@ -183,7 +183,7 @@ module.exports = {
         hasPayload,
         hasRequiredFieldsForCreate,
         hasValidProperties,
-        hasValidTableName,
+        asyncErrorBoundary(hasValidTableName),
         asyncErrorBoundary(hasValidCapacity),
         asyncErrorBoundary(create),
     ],
