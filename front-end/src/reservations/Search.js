@@ -15,7 +15,7 @@ function Search() {
     async function handleSubmit(event) {
         event.preventDefault();
         event.stopPropagation();
-        const abortController = newAbortController();
+        const abortController = new AbortController();
 
         setError(null);
         const results = await search(searchNumber, abortController.signal);
