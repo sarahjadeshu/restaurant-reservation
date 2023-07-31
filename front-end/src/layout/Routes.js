@@ -9,7 +9,7 @@ import Search from "../reservations/Search";
 import NewReservation from "../reservations/NewReservation";
 import { today } from "../utils/date-time";
 
-import NewReservation from "../reservations/NewReservation";
+
 
 /**
  * Defines all the routes for the application.
