@@ -9,6 +9,7 @@ function SelectTable() {
     const [formData, setFormData] = useState({ table_id: null });
     const [error, setError] = useState(null);
     const { reservation_id } = useParams();
+    const history = useHistory();
 
     function loadReservation() {
         const abortController = new AbortController();
@@ -25,7 +26,7 @@ function SelectTable() {
     function loadTables() {
         const abortController = new AbortController();
 
-        listTables(abortController.signal)
+        listTable(abortController.signal)
         .then(setTables)
         .catch(setError)
 
