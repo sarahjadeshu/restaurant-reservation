@@ -7,6 +7,7 @@ import EditReservation from "../reservations/EditReservation";
 import CreateTable from "../tables/CreateTable";
 import Search from "../reservations/Search";
 import NewReservation from "../reservations/NewReservation";
+import SelectTable from "../reservations/SelectTable";
 import { today } from "../utils/date-time";
 
 

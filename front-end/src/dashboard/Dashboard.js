@@ -69,7 +69,7 @@ function Dashboard({ date }) {
           Next
         </button>
       </div>
-      <ReservationTable reservations={results} isToday={isToday} />
+      <ReservationTable reservations={result} isToday={isToday} />
       {!reservations.length && <h3>No reservations available on this date.</h3>}
       <TablesTable />
     </main>
