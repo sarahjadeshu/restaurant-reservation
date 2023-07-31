@@ -35,7 +35,7 @@ const VALID_PROPERTIES = [
     "reservation_id",
 ]
 
-const hasValidProperties = (req, res, next) => {
+const hasValidProperties = async (req, res, next) => {
     const { data = {} } = req.body;
 
     const invalid = Object.keys(data).filter((field) => !VALID_PROPERTIES.includes(field))
@@ -182,7 +182,7 @@ module.exports = {
     create: [
         hasPayload,
         hasRequiredFieldsForCreate,
-        hasValidProperties,
+        asyncErrorBoundary(hasValidProperties),
         asyncErrorBoundary(hasValidTableName),
         asyncErrorBoundary(hasValidCapacity),
         asyncErrorBoundary(create),
@@ -192,7 +192,7 @@ module.exports = {
         asyncErrorBoundary(tableExists),
         hasRequiredFieldsForUpdate,
         asyncErrorBoundary(reservationExists),
-        hasValidProperties,
+        asyncErrorBoundary(hasValidProperties),
         asyncErrorBoundary(hasValidStatus),
         asyncErrorBoundary(isAtCapacity),
         asyncErrorBoundary(isOccupied),
