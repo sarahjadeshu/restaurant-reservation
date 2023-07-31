@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from "react-router";
-import { formatAsDate, previous, next, today } from "../utils/api";
+import { formatAsDate, previous, next, today } from "../utils/date-time";
 import ReservationTable from "../reservations/ReservationTable";
 import TablesTable from "../tables/TablesTable";
 import useQuery from "../utils/useQuery";
