@@ -163,7 +163,7 @@ const hasValidTime = async (req, res, next) => {
 const hasValidPeople = async (req, res, next) => {
   const { people } = req.body.data;
 
-  if (people <= 0 || typeof people !== "number") {
+  if (people <= 0) {
     next({
       status: 400,
       message: `people must include a number greater than 0.`,

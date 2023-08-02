@@ -113,7 +113,7 @@ const hasValidTableName = async (req, res, next) => {
 const hasValidCapacity = async (req, res, next) => {
     const { capacity } = req.body.data;
 
-    if (!capacity || capacity <= 0 || typeof capacity !== "number") {
+    if (!capacity || capacity <= 0) {
         return next({
             status: 400,
             message: "capacity must be a number greater than 0."
