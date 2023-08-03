@@ -17,6 +17,8 @@ function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
 
+  
+
   const query = useQuery();
   const getDate = query.get("date");
   const history = useHistory();
@@ -75,7 +77,7 @@ function Dashboard({ date }) {
       </div>
       <ReservationTable reservations={result} isToday={isToday} />
       {!reservations.length && <h3>No reservations available on this date.</h3>}
-      <TablesTable />
+      <TablesTable reservations={reservations}/>
     </main>
   );
 }

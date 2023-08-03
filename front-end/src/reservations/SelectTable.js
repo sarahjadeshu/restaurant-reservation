@@ -48,7 +48,7 @@ function SelectTable() {
         const abortController = new AbortController();
 
         await seatReservation(reservation_id, formData.table_id, abortController.signal)
-        .then(() => history.pushState("/dashboard"))
+        .then(() => history.push("/dashboard"))
         .catch(setError)
 
         return () => abortController.abort();

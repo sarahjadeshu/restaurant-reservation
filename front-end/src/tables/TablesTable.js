@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
 import ClearButton from "../layout/ClearButton";
 
-function TablesTable() {
+function TablesTable({reservations}) {
     const [tables, setTables] = useState([]);
     const [error, setError] = useState(null);
+    console.log(reservations)
 
     useEffect(loadTables, []);
 
@@ -34,9 +35,6 @@ function TablesTable() {
                         </h6>
                     </td>
                     <td>
-                        {table.reservation_id}
-                    </td>
-                    <td>
                         {table.reservation_id ? (
                             <ClearButton table_id={table.table_id} />
                         ) : null}
@@ -56,7 +54,6 @@ function TablesTable() {
                         <th scope="col">Table</th>
                         <th scope="col">Capacity</th>
                         <th scope="col">Occupied</th>
-                        <th scope="col">Party</th>
                         <th scope="col">Clear Table</th>
                     </tr>
                 </thead>
