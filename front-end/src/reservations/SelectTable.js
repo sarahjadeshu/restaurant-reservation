@@ -8,20 +8,21 @@ function SelectTable() {
     const [reservation, setReservation] = useState(null);
     const [formData, setFormData] = useState({ table_id: null });
     const [error, setError] = useState(null);
-    const { reservation_id } = useParams();
+    // const { reservation_id } = useParams();
+    const params = useParams();
     const history = useHistory();
 
     function loadReservation() {
         const abortController = new AbortController();
 
-        getReservation(reservation_id, abortController.signal)
+        getReservation(params.reservation_id, abortController.signal)
         .then(setReservation)
         .catch(setError)
 
         return () => abortController.abort();
     }
 
-    useEffect(loadReservation, [reservation_id]);
+    useEffect(loadReservation, [params.reservation_id]);
 
     function loadTables() {
         const abortController = new AbortController();
@@ -47,7 +48,7 @@ function SelectTable() {
         event.stopPropagation();
         const abortController = new AbortController();
 
-        await seatReservation(reservation_id, formData.table_id, abortController.signal)
+        await seatReservation(params.reservation_id, formData.table_id, abortController.signal)
         .then(() => history.push("/dashboard"))
         .catch(setError)
 
