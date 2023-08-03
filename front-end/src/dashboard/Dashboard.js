@@ -22,9 +22,6 @@ function Dashboard({ date }) {
   const query = useQuery();
   const getDate = query.get("date");
   const history = useHistory();
-  // const displayDate = formatAsDate(date);
-  // const previousDate = previous(date);
-  // const nextDate = next(date);
   let isToday = true;
 
   if (getDate && getDate !== today()) {
