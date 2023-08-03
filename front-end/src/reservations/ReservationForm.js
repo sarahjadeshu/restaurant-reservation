@@ -61,7 +61,7 @@ function ReservationForm({ reservation, handleSubmit, handleCancel, handleChange
               id="reservation_time"
               value={reservation.reservation_time}
               placeholder="HH:MM"
-              //pattern="[0-9]{2}:[0-9]{2}"
+              pattern="[0-9]{2}:[0-9]{2}"
               onChange={handleChange}
               required={true}
             />
