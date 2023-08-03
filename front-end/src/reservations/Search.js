@@ -24,10 +24,9 @@ function Search() {
             setError({
                 message: "No reservations found."
             })
-
-            setSearchResults(results);
-            return () => abortController.abort();
         }
+        setSearchResults(results);
+        return () => abortController.abort();
     }
 
     return (
