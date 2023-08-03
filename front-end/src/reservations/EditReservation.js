@@ -49,7 +49,6 @@ function EditReservation() {
     return (
       <>
         <div>
-          <h1>DERM</h1>
           <h1>Edit Reservation</h1>
           <ErrorAlert error={error} />
           <ReservationForm

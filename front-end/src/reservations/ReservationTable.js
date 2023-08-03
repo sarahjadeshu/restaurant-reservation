@@ -34,31 +34,43 @@ function ReservationTable({ reservations, isToday }) {
             }
 
             return (
-                <tr key={result.reservation_id}>
-                    <td>{result.reservation_id}</td>
-                    <td>{result.first_name}</td>
-                    <td>{result.last_name}</td>
-                    <td>{formatMobileNumber(result.mobile_number)}</td>
-                    <td>{formatAsTime(result.reservation_time)}</td>
-                    <td data-reservation-id-status={result.reservation_id}>
-                        <h6 className={badge}>{result.status}</h6>
-                    </td>
-                    <td>{result.people}</td>
-                    <td>{result.status === "booked" ? (
-                        <a className="btn btn-primary" href={`/reservations/${result.reservation_id}/seat`}>
-                            Seat
-                        </a>) : null}
-                    </td>
-                    <td data-reservation-id-status={result.reservation_id}>
-                        {result.status === "booked" ? (
-                            <Link to={{pathname: `/reservations/${result.reservation_id}/edit`,}}>
-                                <button className="btn btn-secondary">Edit</button>
-                            </Link>
-                        ) : null}
-                    </td>
-                    <td><Cancel reservation_id={result.reservation_id} /></td>
-                </tr>
-            )
+              <tr key={result.reservation_id}>
+                <td>{result.reservation_id}</td>
+                <td>{result.first_name}</td>
+                <td>{result.last_name}</td>
+                <td>{formatMobileNumber(result.mobile_number)}</td>
+                <td>{formatAsTime(result.reservation_time)}</td>
+                <td data-reservation-id-status={result.reservation_id}>
+                  <h6 className={badge}>{result.status}</h6>
+                </td>
+                <td>{result.people}</td>
+                <td>
+                  {result.status === "booked" ? (
+                    <Link
+                      to={{
+                        pathname: `/reservations/${result.reservation_id}/seat`,
+                      }}
+                    >
+                      <button className="btn btn-secondary">Seat</button>
+                    </Link>
+                  ) : null}
+                </td>
+                <td data-reservation-id-status={result.reservation_id}>
+                  {result.status === "booked" ? (
+                    <Link
+                      to={{
+                        pathname: `/reservations/${result.reservation_id}/edit`,
+                      }}
+                    >
+                      <button className="btn btn-secondary">Edit</button>
+                    </Link>
+                  ) : null}
+                </td>
+                <td>
+                  <Cancel reservation_id={result.reservation_id} />
+                </td>
+              </tr>
+            );
         })
     }
 
