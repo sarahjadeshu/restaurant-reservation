@@ -12,9 +12,9 @@ function CreateTable() {
     const [table, setTable] = useState({...initialFormState});
     const [error, setError] = useState(null);
 
-    const handleCancel = () => {
-        history.goBack();
-    }
+    // const handleCancel = () => {
+    //     history.goBack();
+    // }
 
     const handleChange = ({ target }) => {
         setTable({
