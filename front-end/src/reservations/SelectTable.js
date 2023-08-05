@@ -8,7 +8,6 @@ function SelectTable() {
     const [reservation, setReservation] = useState(null);
     const [formData, setFormData] = useState({ table_id: null });
     const [error, setError] = useState(null);
-    // const { reservation_id } = useParams();
     const params = useParams();
     const history = useHistory();
 
