@@ -8,7 +8,7 @@ function Cancel({ reservation_id }) {
         if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
             const abortController = new AbortController();
             await updateStatus(reservation_id, "cancelled", abortController.signal);
-            history.push("/");
+            history.push('/');
             
             return () => abortController.abort();
         }
