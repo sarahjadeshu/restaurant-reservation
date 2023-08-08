@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Redirect, Route, Switch } from "react-router-dom";
+import { today } from "../utils/date-time";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import EditReservation from "../reservations/EditReservation";
@@ -8,7 +9,6 @@ import CreateTable from "../tables/CreateTable";
 import Search from "../reservations/Search";
 import NewReservation from "../reservations/NewReservation";
 import SelectTable from "../reservations/SelectTable";
-import { today } from "../utils/date-time";
 
 
 
