@@ -3,7 +3,7 @@ import Cancel from "../reservations/Cancel";
 import { Link } from "react-router-dom";
 import { formatAsTime } from "../utils/date-time";
 
-function ReservationTable({ reservations, isToday }) {
+function ReservationTable({ reservations }) {
 
     function formatMobileNumber(mobileNumber) {
         mobileNumber = mobileNumber.replace(/[^0-9.]/g, "");
