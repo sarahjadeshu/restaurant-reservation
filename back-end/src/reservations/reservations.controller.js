@@ -110,6 +110,8 @@ const hasValidProperties = async (req, res, next) => {
   next();
 };
 
+
+
 const hasRequiredFields = hasProperties(...VALID_PROPERTIES.slice(0, 6));
 
 const hasValidDate = async (req, res, next) => {
@@ -141,6 +143,8 @@ const hasValidDate = async (req, res, next) => {
   }
 };
 
+
+
 const hasValidTime = async (req, res, next) => {
   const { reservation_time } = req.body.data;
   const formattedTime = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/;
@@ -160,18 +164,35 @@ const hasValidTime = async (req, res, next) => {
   }
 };
 
-const hasValidPeople = async (req, res, next) => {
-  const { people } = req.body.data;
 
-  if (people <= 0) {
-    next({
-      status: 400,
-      message: `people must include a number greater than 0.`,
-    });
-  } else {
-    next();
+const mobileNumberExists = async(req, res, next) =>{
+   const { mobile_number } = req.body.data;
+  const numberRegex = new RegExp(/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/);
+  if(mobile_number.match(numberRegex)){
+    return next()
+  } else{
+    return next({
+      message: "mobile_number must be a number",
+      status: 400
+    })
   }
-};
+
+}
+
+const peopleExists = async(req, res, next) =>{
+  const { people } = req.body.data;
+  if (people && typeof people === "number") {
+    if(people > 0){
+      console.log(people)
+      return next();
+    }
+  } else {
+    return next({
+      message: "Body of Data must contain a number of people",
+      status: 400,
+    });
+  }
+}
 
 const hasValidStatus = async (req, res, next) => {
   const { status } = req.body.data;
@@ -237,9 +258,10 @@ module.exports = {
   update: [
     asyncErrorBoundary(reservationExists),
     asyncErrorBoundary(hasRequiredFields),
+    asyncErrorBoundary(peopleExists),
     asyncErrorBoundary(hasValidDate),
     asyncErrorBoundary(hasValidTime),
-    asyncErrorBoundary(hasValidPeople),
+    asyncErrorBoundary(mobileNumberExists),
     asyncErrorBoundary(update),
   ],
   updateStatus: [
@@ -253,9 +275,10 @@ module.exports = {
     asyncErrorBoundary(hasRequiredFields),
     asyncErrorBoundary(isBooked),
     asyncErrorBoundary(hasValidProperties),
+    asyncErrorBoundary(peopleExists),
     asyncErrorBoundary(hasValidDate),
     asyncErrorBoundary(hasValidTime),
-    asyncErrorBoundary(hasValidPeople),
+    asyncErrorBoundary(mobileNumberExists),
     asyncErrorBoundary(create),
   ],
   delete: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)],
