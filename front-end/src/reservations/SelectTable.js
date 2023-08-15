@@ -82,7 +82,7 @@ function SelectTable() {
                             </select>
                         </label>
                     </div>
-                    <button className="btn btn-secondary" onClick={() => history.goBack()}>
+                    <button className="btn btn-secondary" onClick={() => history.push("/")}>
                         Cancel
                     </button>
                     <button type="submit" className="btn btn-primary" disabled={!formData.table_id}>

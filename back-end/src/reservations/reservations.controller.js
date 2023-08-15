@@ -131,14 +131,15 @@ const hasValidDate = async (req, res, next) => {
       status: 400,
       message: `Sorry, we are closed on Tuesdays. Please choose a different reservation date.`,
     });
-  } else if (res.locals.reservation) {
-    return next();
-  } else if (reservationDate < today) {
+  }else if (reservationDate < today) {
     next({
       status: 400,
       message: `Reservation date must be made at least a day in the future.`,
     });
-  } else {
+  } 
+  else if (res.locals.reservation) {
+    return next();
+  }  else {
     next();
   }
 };

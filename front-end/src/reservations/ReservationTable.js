@@ -67,7 +67,9 @@ function ReservationTable({ reservations }) {
                   ) : null}
                 </td>
                 <td>
-                  <Cancel reservation_id={result.reservation_id} />
+                  {result.status === "cancelled" || result.status === "finished" ? (
+                    null
+                  ) : <Cancel reservation_id={result.reservation_id} />}
                 </td>
               </tr>
             );
