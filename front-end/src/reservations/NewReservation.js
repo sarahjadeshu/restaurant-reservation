@@ -24,6 +24,8 @@ function NewReservation() {
         event.preventDefault();
         const abortController = new AbortController();
 
+        reservation.people = parseInt(reservation.people)
+
         createReservation(reservation, abortController.signal)
         .then(() => {
             history.push(`/dashboard?date=${reservation.reservation_date}`);
@@ -42,6 +44,7 @@ function NewReservation() {
             ...reservation,
             [target.name]: target.value
         })
+        console.log(typeof target.value)
     }
 
     return (

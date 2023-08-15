@@ -21,6 +21,7 @@ function CreateTable() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        table.capacity = parseInt(table.capacity);
         createTable(table)
             .then(() => {
                 history.push("/dashboard")

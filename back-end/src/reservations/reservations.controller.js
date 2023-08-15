@@ -26,7 +26,7 @@ async function read(req, res) {
 }
 
 const create = async (req, res) => {
-  const {
+  let {
     first_name,
     last_name,
     mobile_number,
@@ -180,10 +180,9 @@ const mobileNumberExists = async(req, res, next) =>{
 }
 
 const peopleExists = async(req, res, next) =>{
-  const { people } = req.body.data;
-  if (people && typeof people === "number") {
+  let { people } = req.body.data;
+  if (people && typeof people === 'number') {
     if(people > 0){
-      console.log(people)
       return next();
     }
   } else {
