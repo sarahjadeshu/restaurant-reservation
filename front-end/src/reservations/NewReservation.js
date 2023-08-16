@@ -4,6 +4,8 @@ import { createReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
 
+// Functionality for creating a new reservation using ReservationForm component
+
 function NewReservation() {
 
     const initialFormState = {

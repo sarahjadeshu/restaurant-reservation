@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
 import ClearButton from "../layout/ClearButton";
 
+// Displays the available tables
+
 function TablesTable({reservations}) {
     const [tables, setTables] = useState([]);
     const [error, setError] = useState(null);

@@ -4,6 +4,9 @@ import { getReservation, updateReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
 
+// Functionality for editing reservation
+// Utilizes ReservationForm component as display
+
 function EditReservation() {
     const [reservation, setReservation] = useState({});
     const [error, setError] = useState(null);

@@ -1,5 +1,7 @@
 import React from "react";
 
+// Form that is displayed to input reservation information
+
 function ReservationForm({ reservation, handleSubmit, handleCancel, handleChange }) {
 
     return (

@@ -3,6 +3,8 @@ import { search } from "../utils/api";
 import ReservationTable from "./ReservationTable";
 import ErrorAlert from "../layout/ErrorAlert";
 
+// Search functionality for searching by mobile number
+
 function Search() {
     const [searchNumber, setSearchNumber] = useState("");
     const [searchResults, setSearchResults] = useState([]);

@@ -3,6 +3,8 @@ import { useHistory, useParams } from "react-router";
 import { listTable, seatReservation, getReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
+// Seats each reservation at a certain table
+
 function SelectTable() {
     const [tables, setTables] = useState([]);
     const [reservation, setReservation] = useState(null);

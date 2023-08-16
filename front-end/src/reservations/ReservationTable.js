@@ -3,6 +3,8 @@ import Cancel from "../reservations/Cancel";
 import { Link } from "react-router-dom";
 import { formatAsTime } from "../utils/date-time";
 
+// Displays reservations that have been created in a table
+
 function ReservationTable({ reservations }) {
 
     function formatMobileNumber(mobileNumber) {
