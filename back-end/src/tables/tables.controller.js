@@ -118,6 +118,8 @@ const hasValidTableName = async (req, res, next) => {
     }
 }
 
+// Checks to see if capacity is a number that is greater than 0
+
 const hasValidCapacity = async (req, res, next) => {
     const { capacity } = req.body.data;
 
@@ -130,6 +132,8 @@ const hasValidCapacity = async (req, res, next) => {
         });
     }
 }
+
+// Checks to see if the status is "booked"
 
 const hasValidStatus = async (req, res, next) => {
     const { status } = res.locals.reservation;
@@ -144,6 +148,8 @@ const hasValidStatus = async (req, res, next) => {
         next();
     }
 }
+
+// Checks to see if the capacity is greater than the party size
 
 const isAtCapacity = async (req, res, next) => {
     const { capacity } = res.locals.table;
