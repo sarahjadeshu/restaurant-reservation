@@ -54,6 +54,8 @@ const hasRequiredFieldsForCreate = hasProperties(...VALID_PROPERTIES.slice(0, 2)
 
 const hasRequiredFieldsForUpdate = hasProperties(...VALID_PROPERTIES.slice(2))
 
+// Checks to see if reservation exists
+
 const reservationExists = async (req, res, next) => {
     const { reservation_id } = req.body.data;
     const reservation = await reservationsService.read(reservation_id);
@@ -68,6 +70,8 @@ const reservationExists = async (req, res, next) => {
         })
     }
 }
+
+// Checks to see if table exists
 
 const tableExists = async (req, res, next) => {
     const { table_id } = req.params;
@@ -84,6 +88,8 @@ const tableExists = async (req, res, next) => {
     }
 }
 
+// Checks to see if payload exists
+
 const hasPayload = (req, res, next) => {
     const data = req.body.data;
 
@@ -96,6 +102,8 @@ const hasPayload = (req, res, next) => {
         next();
     }
 }
+
+// Checks to see if table name has 2 or more characters
 
 const hasValidTableName = async (req, res, next) => {
     const { table_name } = req.body.data;
