@@ -165,6 +165,8 @@ const isAtCapacity = async (req, res, next) => {
     }
 }
 
+// Checks to see if the table has a reservation id
+
 const isOccupied = async (req, res, next) => {
     const { reservation_id } = res.locals.table;
 
@@ -177,6 +179,8 @@ const isOccupied = async (req, res, next) => {
         next();
     }
 }
+
+// Checks to see if the table has a reservation id
 
 const isNotOccupied = async (req, res, next) => {
     const { reservation_id } = res.locals.table;
