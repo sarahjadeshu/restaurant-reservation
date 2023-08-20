@@ -78,6 +78,8 @@ const VALID_PROPERTIES = [
   "status",
 ];
 
+// Checks to see if if the reservation exists
+
 const reservationExists = async (req, res, next) => {
   const { reservation_id } = req.params;
   const reservation = await service.read(reservation_id);
@@ -92,6 +94,8 @@ const reservationExists = async (req, res, next) => {
     });
   }
 };
+
+// Checks to see if the reservation has all valid properties
 
 const hasValidProperties = async (req, res, next) => {
   const { data = {} } = req.body;
