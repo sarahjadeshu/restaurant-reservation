@@ -118,6 +118,8 @@ const hasValidProperties = async (req, res, next) => {
 
 const hasRequiredFields = hasProperties(...VALID_PROPERTIES.slice(0, 6));
 
+// Checks to see if the reservation has a valid date
+
 const hasValidDate = async (req, res, next) => {
   const { reservation_date } = req.body.data;
   const today = new Date();
@@ -148,7 +150,7 @@ const hasValidDate = async (req, res, next) => {
   }
 };
 
-
+// Checks to see if the reservation has a valid time
 
 const hasValidTime = async (req, res, next) => {
   const { reservation_time } = req.body.data;
@@ -169,6 +171,7 @@ const hasValidTime = async (req, res, next) => {
   }
 };
 
+// Checks to see if the mobile number is valid
 
 const mobileNumberExists = async(req, res, next) =>{
    const { mobile_number } = req.body.data;
