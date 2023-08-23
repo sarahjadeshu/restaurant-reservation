@@ -187,6 +187,9 @@ const mobileNumberExists = async(req, res, next) =>{
 
 }
 
+// Checks to see if people exists
+// Checks to see if people is a number
+
 const peopleExists = async(req, res, next) =>{
   let { people } = req.body.data;
   if (people && typeof people === 'number') {
@@ -200,6 +203,8 @@ const peopleExists = async(req, res, next) =>{
     });
   }
 }
+
+// Checks to see if status is one of the properties
 
 const hasValidStatus = async (req, res, next) => {
   const { status } = req.body.data;
