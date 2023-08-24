@@ -220,6 +220,8 @@ const hasValidStatus = async (req, res, next) => {
   }
 };
 
+// Checks to see if the status is finished
+
 const finishedUpdate = async (req, res, next) => {
   const { status } = res.locals.reservation;
 
@@ -233,7 +235,7 @@ const finishedUpdate = async (req, res, next) => {
   }
 };
 
-
+// Checks to see if the status is booked
 
 const isBooked = async (req, res, next) => {
   if (req.body.data.status) {
