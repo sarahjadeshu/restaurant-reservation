@@ -253,6 +253,8 @@ const isBooked = async (req, res, next) => {
   }
 }
 
+// Checks to see if data is included
+
 const hasData = async (req, res, next) => {
   const data = req.body.data;
 
