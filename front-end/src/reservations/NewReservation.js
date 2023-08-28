@@ -22,6 +22,9 @@ function NewReservation() {
     const [error, setError] = useState(null);
     const history = useHistory();
 
+
+    // Submit handler for new reservation form
+    
     const handleSubmit = (event) => {
         event.preventDefault();
         const abortController = new AbortController();
