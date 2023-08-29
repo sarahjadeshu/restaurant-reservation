@@ -40,9 +40,13 @@ function NewReservation() {
         return () => abortController.abort();
     }
 
+    // Cancel handler, returns to home page
+
     const handleCancel = () => {
         history.push("/");
     }
+
+    // Change handler
 
     const handleChange = ({target}) => {
         setReservation({
