@@ -25,6 +25,8 @@ function EditReservation() {
         return () => abortController.abort();
     }
 
+    // Change handler
+
     const handleChange = ({ target }) => {
         setReservation({
             ...reservation,
@@ -35,6 +37,8 @@ function EditReservation() {
     const handleCancel = () => {
         history.goBack();
     }
+
+    // Submit handler 
 
     const handleSubmit = (event) => {
         event.preventDefault();
