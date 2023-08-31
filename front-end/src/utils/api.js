@@ -68,6 +68,8 @@ export async function listReservations(params, signal) {
     .then(formatReservationTime);
 }
 
+// Creates a new reservation
+
 export async function createReservation(reservation, signal) {
   const url = `${API_BASE_URL}/reservations`;
 
@@ -81,6 +83,8 @@ export async function createReservation(reservation, signal) {
   return await fetchJson(url, options);
 }
 
+// Retrieves existing reservation
+
 export async function getReservation(reservation_id, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation_id}`;
 
@@ -92,6 +96,8 @@ export async function getReservation(reservation_id, signal) {
 
   return await fetchJson(url, options)
 }
+
+// Updates existing reservation
 
 export async function updateReservation(reservation, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}`
