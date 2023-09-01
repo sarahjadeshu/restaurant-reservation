@@ -111,6 +111,8 @@ export async function updateReservation(reservation, signal) {
   return await fetchJson(url, options);
 }
 
+// Updates status of reservation
+
 export async function updateStatus(reservation_id, status, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation_id}/status`
 
@@ -123,6 +125,8 @@ export async function updateStatus(reservation_id, status, signal) {
 
   return await fetchJson(url, options);
 }
+
+// Creates a new table
 
 export async function createTable(table, signal) {
   const url = `${API_BASE_URL}/tables`;
