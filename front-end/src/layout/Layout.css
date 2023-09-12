@@ -1,4 +1,8 @@
 .side-bar {
-  background-color: #393a44;
+  background-color: #87abe2;
   min-width: 200px;
+}
+
+.navbar-nav {
+  color: black;
 }
