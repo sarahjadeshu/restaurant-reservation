@@ -1,4 +1,9 @@
 .side-bar {
-  background-color: #87abe2;
+  background-color: #99857b;
   min-width: 200px;
+}
+
+.dash {
+  color: rgb(128, 96, 88);
+  font-weight: bold;
 }
