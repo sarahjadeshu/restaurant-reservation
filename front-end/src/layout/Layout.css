@@ -8,9 +8,11 @@
 /* Dashboard */
 
 .dash {
-  margin-top: 0.5em;
-  color: rgb(65, 65, 65);
+  margin-top: 0.6em;
+  margin-bottom: 0.5em;
+  color: rgb(0, 0, 0);
   font-weight: bold;
+  font-size: 1.7em;
 }
 
 .border-style {
@@ -18,9 +20,20 @@
   border:solid;
   border-width: 0.5mm;
   border-radius: 1em;
-  border-color:rgb(180, 180, 180);
+  border-color:rgb(194, 194, 194);
+}
+
+.btn-group {
+  margin-bottom: 0.6em;
+}
+
+.tables-header {
+  font-weight: bold;
+  font-size: 1.7em;
+  margin-top: 0.8em;
 }
 
 main {
-  margin-left: 0.5em;
+  margin-left: 1%;
+  margin-right: 1%;
 }

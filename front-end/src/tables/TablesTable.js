@@ -48,7 +48,7 @@ function TablesTable({reservations}) {
 
     return (
         <div>
-            <h1>Tables</h1>
+            <h1 className="tables-header">Tables</h1>
             <ErrorAlert error={error} />
             <table className="table">
                 <thead>
