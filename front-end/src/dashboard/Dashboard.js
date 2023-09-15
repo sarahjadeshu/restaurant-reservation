@@ -57,6 +57,7 @@ function Dashboard({ date }) {
   return (
     <main>
       <h1 className="dash">Dashboard</h1>
+      <div className="border-style">
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Reservations for {displayDate}</h4>
       </div>
@@ -74,6 +75,7 @@ function Dashboard({ date }) {
       </div>
       <ReservationTable reservations={result} isToday={isToday} />
       {!reservations.length && <h3>No reservations available on this date.</h3>}
+      </div>
       <TablesTable reservations={reservations}/>
     </main>
   );

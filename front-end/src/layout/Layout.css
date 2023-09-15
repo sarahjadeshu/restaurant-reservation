@@ -1,12 +1,24 @@
+/* Nav Bar */
+
 .side-bar {
-  background-color: #99857b;
+  background-color: #a8a8a8;
   min-width: 200px;
 }
 
+/* Dashboard */
+
 .dash {
   margin-top: 0.5em;
-  color: rgb(128, 96, 88);
+  color: rgb(65, 65, 65);
   font-weight: bold;
+}
+
+.border-style {
+  padding: 1.2em;
+  border:solid;
+  border-width: 0.5mm;
+  border-radius: 1em;
+  border-color:rgb(180, 180, 180);
 }
 
 main {
