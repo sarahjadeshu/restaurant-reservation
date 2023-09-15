@@ -4,6 +4,11 @@
 }
 
 .dash {
+  margin-top: 0.5em;
   color: rgb(128, 96, 88);
   font-weight: bold;
+}
+
+main {
+  margin-left: 0.5em;
 }
