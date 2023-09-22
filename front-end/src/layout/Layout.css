@@ -27,6 +27,12 @@
   margin-bottom: 0.6em;
 }
 
+.btn-date {
+  margin-right: 0.5em;
+  background-color: rgb(108, 184, 255);
+  border: none;
+}
+
 .tables-header {
   font-weight: bold;
   font-size: 1.7em;
