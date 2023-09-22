@@ -30,7 +30,14 @@
 .btn-date {
   margin-right: 0.5em;
   background-color: rgb(108, 184, 255);
+  color: rgb(255, 249, 242);
   border: none;
+  border-radius: 0.3em;
+  padding: 0.4em;
+}
+
+.btn-date:hover {
+  opacity: 60%;
 }
 
 .tables-header {
