@@ -63,13 +63,13 @@ function Dashboard({ date }) {
       </div>
       <ErrorAlert error={reservationsError} />
       <div className="btn-group" role="group" aria-label="Choose a date">
-        <button className="btn-date" onClick={() => adjustDate(previousDate)}>
+        <button className="btn-all btn-date" onClick={() => adjustDate(previousDate)}>
           Back
         </button>
-        <button className="btn-date" onClick={() => history.push("/dashboard")} disabled={date === today()}>
+        <button className="btn-all btn-date" onClick={() => history.push("/dashboard")} disabled={date === today()}>
           Today
         </button>
-        <button className="btn-date" onClick={() => adjustDate(nextDate)}>
+        <button className="btn-all btn-date" onClick={() => adjustDate(nextDate)}>
           Next
         </button>
       </div>

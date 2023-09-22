@@ -33,10 +33,11 @@ function Search() {
 
     return (
         <div>
-            <h1>Search</h1>
+            <main>
+            <h1 className="search-style">Search</h1>
             <div className="row">
                 <form onSubmit={handleSubmit} className="col-4">
-                    <label htmlFor="mobile_number">Mobile Number</label>
+                    <label htmlFor="mobile_number">Mobile Number:</label>
                     <input
                         name="mobile_number"
                         type="text"
@@ -47,13 +48,14 @@ function Search() {
                         onChange={handleChange}
                         required
                     />
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn-all btn-search">
                         Submit
                     </button>
                 </form>
             </div>
             <ErrorAlert error={error} />
             <ReservationTable reservations={searchResults} />
+            </main>
         </div>
     )
 }
