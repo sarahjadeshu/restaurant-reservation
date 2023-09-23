@@ -71,3 +71,17 @@ main {
 .btn-search {
   margin-top: 0.5em;
 }
+
+/* New Reservation */
+
+.res-style {
+  margin-top: 0.6em;
+  margin-bottom: 0.8em;
+}
+
+/* New Table */
+
+.table-style {
+  margin-top: 0.6em;
+  margin-bottom: 0.4em;
+}

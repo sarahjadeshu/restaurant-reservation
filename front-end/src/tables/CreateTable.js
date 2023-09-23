@@ -34,7 +34,7 @@ function CreateTable() {
     return (
         <div>
             <main>
-            <h1>Create A New Table</h1>
+            <h1 className="table-style">Create A New Table</h1>
             <ErrorAlert error={error} />
             <form onSubmit={handleSubmit}>
                 <fieldset>

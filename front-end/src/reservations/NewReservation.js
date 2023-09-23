@@ -60,7 +60,7 @@ function NewReservation() {
         <>
         <main>
             <div>
-                <h1>New Reservation</h1>
+                <h1 className="res-style">New Reservation</h1>
                 <ErrorAlert error={error} />
                 <ReservationForm reservation={reservation} handleSubmit={handleSubmit} handleCancel={handleCancel} handleChange={handleChange} />
             </div>
