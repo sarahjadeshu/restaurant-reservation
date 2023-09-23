@@ -33,6 +33,7 @@ function CreateTable() {
 
     return (
         <div>
+            <main>
             <h1>Create A New Table</h1>
             <ErrorAlert error={error} />
             <form onSubmit={handleSubmit}>
@@ -78,6 +79,7 @@ function CreateTable() {
                         >Submit</button>
                 </fieldset>
             </form>
+            </main>
         </div>
     )
 }
