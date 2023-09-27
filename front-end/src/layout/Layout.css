@@ -1,7 +1,7 @@
 /* Buttons */
 
 .btn-all {
-  background-color: rgb(108, 184, 255);
+  background-color: rgb(116, 68, 84);
   color: rgb(255, 249, 242);
   border: none;
   border-radius: 0.3em;
@@ -19,7 +19,7 @@
 /* Navigation Bar */
 
 .side-bar {
-  background-color: #a8a8a8;
+  background-color: #9e4f63;
   min-width: 200px;
 }
 
